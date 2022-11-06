@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +51,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  static const platform = MethodChannel('com.kmalinowski.notification_spawner/notifications');
+
+  void _spawnNotification() async {
+    try {
+      await platform.invokeMethod('spawnSimple');
+    } on PlatformException catch (e) {
+       print(e);
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -106,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _spawnNotification,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
