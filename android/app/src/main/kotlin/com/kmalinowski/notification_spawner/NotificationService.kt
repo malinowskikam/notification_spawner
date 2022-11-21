@@ -22,9 +22,9 @@ class NotificationService(private val context: Context) {
         val channel = NotificationChannel(testChannelId, name, importance).apply {
             description = descriptionText
             enableLights(true)
-            enableVibration(true);
+            enableVibration(true)
             lightColor = Color.GREEN;
-            lockscreenVisibility = Notification.VISIBILITY_PUBLIC;
+            lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
 
         val notificationManager: NotificationManager =

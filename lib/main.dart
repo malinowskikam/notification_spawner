@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final database = openDatabase(join(await getDatabasesPath(), 'doggie_database.db'));
   runApp(const MyApp());
 }
 
@@ -51,13 +55,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  static const platform = MethodChannel('com.kmalinowski.notification_spawner/notifications');
+  static const platform =
+      MethodChannel('com.kmalinowski.notification_spawner/notifications');
 
   void _spawnNotification() async {
     try {
       await platform.invokeMethod('spawnSimple');
     } on PlatformException catch (e) {
-       print(e);
+      print(e);
     }
   }
 
